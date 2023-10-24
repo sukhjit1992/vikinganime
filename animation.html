@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="animationCanvas" width="1000px" height="1000px"></canvas>
+    <script>
+        const canvas = document.getElementById('animationCanvas');
+const ctx = canvas.getContext('2d');
+
+const vikingImage = new Image();
+vikingImage.src = 'bjorn.png';
+
+// Initial position and size of the Viking
+let vikingX = 100;
+let vikingY = 100;
+let vikingScale = 1;
+
+// Axe position
+let axeX = 200;
+let axeY = 150;
+
+// Animation parameters
+let animationFrame = 0;
+const animationFrames = 60; // Number of frames for the animation
+
+function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Animate the Viking's strike
+    if (animationFrame < animationFrames / 2) {
+        vikingScale += 0.02; // Enlarge Viking
+        axeX += 5; // Move axe right
+    } else {
+        vikingScale -= 0.02; // Shrink Viking
+        axeX += 5; // Move axe right
+    }
+
+    // Draw the Viking
+    ctx.drawImage(vikingImage, vikingX, vikingY, vikingImage.width * vikingScale, vikingImage.height * vikingScale);
+
+    // Draw the axe
+    ctx.fillStyle = 'brown';
+    ctx.fillRect(axeX, axeY, 20, 5);
+
+    animationFrame++;
+
+    if (animationFrame < animationFrames) {
+        requestAnimationFrame(animate);
+    }
+}
+
+vikingImage.onload = animate;
+
+    </script>
+</body>
+</html>
